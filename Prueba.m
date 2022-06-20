@@ -1,15 +1,15 @@
 clc;
 clear;
 
-load("operators.mat")
-load("JasperRidge.mat")
-Zm = Md(Z,M);
-matfile('Zm.mat','Writable',true);
-imagesc(Zm(:,:,198));
-Zr = Rd(Z,R);
-matfile('Zr.mat','Writable',true);
-figure,imagesc(Zr(:,:,3));
+load("datasets/operators.mat")
+load("datasets/JasperRidge.mat")
+imagesc(Z(:,:,198));
+M = transpose(M);
 Zb = Bd(Z,B);
-matfile('Zb.mat','Writable',true);
-save('Model.mat','Zb','Zm','Zr')
-figure,imagesc((Zb(:,:,198)));
+Zh = Md(Zb,M);
+matfile('Zh.mat','Writable',true);
+figure,imagesc(Zh(:,:,198));
+Zm = Rd(Z,R);
+matfile('Zm.mat','Writable',true);
+figure,imagesc(Zm(:,:,3));
+save('Model.mat','Zm','Zh','Z')

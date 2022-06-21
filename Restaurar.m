@@ -1,7 +1,7 @@
 clc;
 clear;
 
-load("datasets\Model.mat")
+load("datasets\Model_35.mat")
 load("datasets\operators.mat")
 
 % Se invierten las filas
@@ -25,7 +25,7 @@ end
 %figure,imagesc(B)
 
 % Z original
-imagesc(Z(:,:,198))
+figure,imagesc(Z(:,:,198))
 
 % Restaurar Zm
 Zm_restaurada = reshape(Zm,10000,3);

@@ -24,6 +24,9 @@ function [A] = abundances_step(A,E,Zh,Zm,B,M,R,ops)
             end
         end
     end
+    WA=B*Bt;
+    WA=WA(1,1)+2*ops.rho;
+    WA=1/WA  %Inversa
     W1=inv(M*M.'+I1);
     W2=inv(E.'*E+ops.rho*I2);
     W3=inv((R*E).'*(R*E)+ops.rho*I2);

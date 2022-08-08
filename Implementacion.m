@@ -9,7 +9,7 @@ M = transpose(M);
 E=zeros(198,4);
 A=zeros(4,10000);
 ops.rho=0.1;
-ops.niter=4;
+ops.niter=10;
 [A]=abundances_step(A,E,Zh,Zm,B,M,R,ops);
 A=reshape(A.',100,100,4);
 imagesc(A(:,:,1));

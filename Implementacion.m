@@ -8,6 +8,8 @@ M = transpose(M);
 % Estimacion de A y E
 E=zeros(198,4);
 A=zeros(4,10000);
-ops.rho=0.5;
-ops.niter=10;
+ops.rho=0.1;
+ops.niter=4;
 [A]=abundances_step(A,E,Zh,Zm,B,M,R,ops);
+A=reshape(A.',100,100,4);
+imagesc(A(:,:,1));

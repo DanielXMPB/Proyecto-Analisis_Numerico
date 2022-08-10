@@ -17,14 +17,7 @@ function [E] = endmembers_step(A, E, Zh, Zm, B, M, R, ops)
     Bt = B([1 n:-1:2], [1 n:-1:2]);
     % Se guardan las matrices inversas
     WE=inv(2*(A*A.')+I1);
-    W1=((B*Bt)+I2);
-    for i=1:size(W1,1)
-       for j=1:size(W1,2)
-           if W1(i,j)~=0
-              W1(i,j)=1/W1(i,j);
-           end
-        end
-    end
+    W1=inv((B*Bt)+I2);
     W2=inv((M*M.')+ops.rho*I3);
     W3=inv((R.'*R)+ops.rho*I4);
     %Variables Adicionales

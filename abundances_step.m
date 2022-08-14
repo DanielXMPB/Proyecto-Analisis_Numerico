@@ -15,8 +15,7 @@ function [A] = abundances_step(A,E,Zh,Zm,B,M,R,ops)
     Bt = B([1 n:-1:2], [1 n:-1:2]);
     % Se guardan las matrices inversas
     WA=B.*Bt;
-    WA(1,1)=WA(1,1)+2*ops.rho;
-    %WA=1./WA;
+    WA(1,1)=WA(1,1)+2;
     for i=1:size(WA,1)
         for j=1:size(WA,2)
             if WA(i,j)~=0
@@ -24,9 +23,6 @@ function [A] = abundances_step(A,E,Zh,Zm,B,M,R,ops)
             end
         end
     end
-    WA=B*Bt;
-    WA=WA(1,1)+2*ops.rho;
-    WA=1/WA;  %Inversa
     W1=inv(M*M.'+I1);
     W2=inv(E.'*E+ops.rho*I2);
     W3=inv((R*E).'*(R*E)+ops.rho*I2);
@@ -38,7 +34,7 @@ function [A] = abundances_step(A,E,Zh,Zm,B,M,R,ops)
         A=((M_capa4x1(V1,Bt)-M_capa4x1(U1,Bt))+V3-U3+V4-U4);
         A=M_capa4x1(A,WA);
         V1=((M_capa4x1(A,B))+U1+V2*M.'-U2*M.')*W1;
-        V2=W2*(E.'*Zht.'+(ops.rho*(U1*M))+(ops.rho*U2));
+        V2=W2*(E.'*Zht.'+(ops.rho*(V1*M))+(ops.rho*U2));
         V3=W3*((R*E).'*Zmt.'+ops.rho*A+ops.rho*U3);
         for j=1:size(V4,2)
             V4(:,j)=projsplx(A(:,j)+U4(:,j));

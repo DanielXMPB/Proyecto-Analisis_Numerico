@@ -23,6 +23,7 @@ function [A] = abundances_step(A,E,Zh,Zm,B,M,R,ops)
             end
         end
     end
+    WA=WA/sum(WA);
     W1=inv(M*M.'+I1);
     W2=inv(E.'*E+ops.rho*I2);
     W3=inv((R*E).'*(R*E)+ops.rho*I2);

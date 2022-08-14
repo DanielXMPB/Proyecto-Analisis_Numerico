@@ -25,7 +25,6 @@ function [E] = endmembers_step(A, E, Zh, Zm, B, M, R, ops)
            end
         end
     end
-    W1=inv((B*Bt)+I2);
     W2=inv((M*M.')+ops.rho*I3);
     W3=inv((R.'*R)+ops.rho*I4);
     %Variables Adicionales

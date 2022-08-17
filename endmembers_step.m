@@ -16,15 +16,20 @@ function [E] = endmembers_step(A, E, Zh, Zm, B, M, R, ops)
     Bt = B([1 n:-1:2], [1 n:-1:2]);
     % Se guardan las matrices inversas
     WE=inv(2*(A*A.')+I1);
-    W1=B.*Bt;
-    W1(1,1)=W1(1,1)+1;
-    for i=1:size(W1,1)
-       for j=1:size(W1,2)
-           if W1(i,j)~=0
-              W1(i,j)=1/W1(i,j);
-           end
-        end
-    end
+%     W1=B.*Bt;
+%     W1(1,1)=W1(1,1)+1;
+%     for i=1:size(W1,1)
+%        for j=1:size(W1,2)
+%            if W1(i,j)~=0
+%               W1(i,j)=1/W1(i,j);
+%            end
+%         end
+%     end
+
+    W1 = ifft2(fft2(B) .* fft2(Bt));
+    W1(1,1) = W1(1,1)+1;
+    W1 = ifft2(1./fft2(W1));
+    
     W2=inv((M*M.')+ops.rho*I3);
     W3=inv((R.'*R)+ops.rho*I4);
     %Variables Adicionales
@@ -47,9 +52,14 @@ function [E] = endmembers_step(A, E, Zh, Zm, B, M, R, ops)
                 end
             end
         end
-        U1=U1+V1-E*A;
-        U2=U2+V2-M_capa198x1(V1,B);
-        U3=U3+V3-E*A;
-        U4=U4+V4-E;
+%         U1=U1+V1-E*A;
+%         U2=U2+V2-M_capa198x1(V1,B);
+%         U3=U3+V3-E*A;
+%         U4=U4+V4-E;
+
+        U1=U1-V1+E*A;
+        U2=U2-V2+M_capa198x1(V1,B);
+        U3=U3-V3+E*A;
+        U4=U4-V4+E;
     end
 end

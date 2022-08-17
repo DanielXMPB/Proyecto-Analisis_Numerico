@@ -13,17 +13,23 @@ function [A] = abundances_step(A,E,Zh,Zm,B,M,R,ops)
     I2=eye(4);
     n = size(B, 1);
     Bt = B([1 n:-1:2], [1 n:-1:2]);
+    
     % Se guardan las matrices inversas
-    WA=B.*Bt;
-    WA(1,1)=WA(1,1)+2;
-    for i=1:size(WA,1)
-        for j=1:size(WA,2)
-            if WA(i,j)~=0
-                WA(i,j)=1/WA(i,j);
-            end
-        end
-    end
-    WA=WA/sum(WA);
+%     WA=B.*Bt;
+%     WA(1,1)=WA(1,1)+2;
+%     for i=1:size(WA,1)
+%         for j=1:size(WA,2)
+%             if WA(i,j)~=0
+%                 WA(i,j)=1/WA(i,j);
+%             end
+%         end
+%     end
+%     WA=WA/sum(WA);
+
+    WA = ifft2(fft2(B) .* fft2(Bt));
+    WA(1,1) = WA(1,1)+2;
+    WA = ifft2(1./fft2(WA));
+
     W1=inv(M*M.'+I1);
     W2=inv(E.'*E+ops.rho*I2);
     W3=inv((R*E).'*(R*E)+ops.rho*I2);
@@ -40,9 +46,14 @@ function [A] = abundances_step(A,E,Zh,Zm,B,M,R,ops)
         for j=1:size(V4,2)
             V4(:,j)=projsplx(A(:,j)+U4(:,j));
         end
-        U1=U1+V1-M_capa4x1(A,B);
-        U2=U2+V2-V1*M;
-        U3=U3+V3-A;
-        U4=U4+V4-A;
+%         U1=U1+V1-M_capa4x1(A,B);
+%         U2=U2+V2-V1*M;
+%         U3=U3+V3-A;
+%         U4=U4+V4-A;
+
+        U1=U1-V1+M_capa4x1(A,B);
+        U2=U2-V2+V1*M;
+        U3=U3-V3+A;
+        U4=U4-V4+A;
     end
 end

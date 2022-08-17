@@ -1,9 +1,7 @@
 function [Z] = spectral_fusion(Zh, Zm, B, M, R, ops)
     % Se inicializan las variables:
-    A = randn(4,10000);
-    a = 0;
-    b = 1;
-    E = (b-a).*rand(198,4) + a;
+    A = rand(4,10000);
+    E = rand(198,4);
     %E = randn(198,4);
     % Ciclo principal del algoritmo:
     for i=1:ops.n

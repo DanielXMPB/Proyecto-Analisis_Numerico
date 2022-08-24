@@ -5,9 +5,9 @@ elseif size(Z,1) == 4
     Z=reshape(Z.',100,100,4);
 end
 Zb = Bd(Z,B);
-if size(B2,3) == 198
+if size(Zb,3) == 198
     Zb = reshape(Zb,10000,198);
-elseif size(B2,3) == 4
+elseif size(Zb,3) == 4
     Zb = reshape(Zb,10000,4);
 end
 Zb = Zb.';

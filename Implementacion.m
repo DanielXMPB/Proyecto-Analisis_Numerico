@@ -46,3 +46,4 @@ save('Zf.mat','Zf');
 %     end
 %     m(i,4) = mean(endm);
 % end
+% save("Metricas.mat","m")

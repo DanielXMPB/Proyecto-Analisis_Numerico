@@ -1,16 +1,5 @@
-function [A] = abundances_step(A,E,Zh,Zm,B,M,R,ops)
-    % Se inicializan V y U
-    V1=zeros(4,10000);
-    V2=zeros(4,625);
-    V3=zeros(4,10000);
-    V4=zeros(4,10000);
-    U1=zeros(4,10000);
-    U2=zeros(4,625);
-    U3=zeros(4,10000);
-    U4=zeros(4,10000);
-
+function [A] = abundances_step(A,E,Zh,Zm,B,M,R,ops,W1)
     % Se inicializan matrices identidad y Bt
-    I1=eye(10000);
     I2=eye(4);
     n = size(B, 1);
     Bt = B([1 n:-1:2], [1 n:-1:2]);
@@ -19,13 +8,22 @@ function [A] = abundances_step(A,E,Zh,Zm,B,M,R,ops)
     WA = ifft2(fft2(B) .* fft2(Bt));
     WA(1,1) = WA(1,1)+2;
     WA = ifft2(1./fft2(WA));
-    W1=inv(M*M.'+I1);
     W2=inv(E.'*E+ops.rho*I2);
     W3=inv((R*E).'*(R*E)+ops.rho*I2);
 
     %Variables Adicionales
     Zht=reshape(Zh,625,198);
     Zmt=reshape(Zm,10000,3);
+
+    % Se inicializan V y U
+    U1=zeros(4,10000);
+    U2=zeros(4,625);
+    U3=zeros(4,10000);
+    U4=zeros(4,10000);
+    V1=MxB(A,B);
+    V2=V1*M;
+    V3=A;
+    V4=A;
 
     % inicia iteracion 
     for i=1:ops.niter
@@ -42,4 +40,5 @@ function [A] = abundances_step(A,E,Zh,Zm,B,M,R,ops)
         U3=U3-V3+A;
         U4=U4-V4+A;
     end
+    A = V4;
 end

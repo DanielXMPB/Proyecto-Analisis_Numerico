@@ -7,9 +7,9 @@ load("Estimacion_E.mat")
 
 % Correcion M
 M = transpose(M);
-ops.niter=20;
+ops.niter=15;
 ops.n=10;
-ops.rho=0.57;
+ops.rho = 0.99;
 
 % [A] = abundances_step(A,E,Zh,Zm,B,M,R,ops);
 % A=reshape(A.',100,100,4);
@@ -21,14 +21,15 @@ ops.rho=0.57;
 %[E] = endmembers_step(A,E,Zh,Zm,B,M,R,ops);
 %imagesc(E(:,:));
 
-Zf = spectral_fusion(E, Zh, Zm, B, M, R, ops);
+[Zf, AZf, EZf] = spectral_fusion(E, Zh, Zm, B, M, R, ops);
 Zf = reshape(Zf.',100,100,198);
 imagesc(Zf(:,:,1));
-save('Zf.mat','Zf');
-% figure, imagesc(Z(:,:,1));
+save('Zf.mat','Zf','AZf',"EZf"); 
+% Max = max(Zf,[],'all');
+% Min = min(Zf,[],'all');
 
-% rho = [0.57;0.55;0.53];
-% m = zeros(size(rho,1),3);
+% rho = [1.1;1;0.9;0.8];
+% m = zeros(size(rho,1),5);
 % endm = zeros(10000,1);
 % m = [rho m];
 % for i=1:size(rho,1)
@@ -45,5 +46,7 @@ save('Zf.mat','Zf');
 %         end
 %     end
 %     m(i,4) = mean(endm);
+%     m(i,5) = max(Zf,[],'all');
+%     m(i,6) = min(Zf,[],'all');
 % end
-% save("Metricas.mat","m")
+% save("Metricas_1.1-0.02.mat","m")

@@ -6,8 +6,8 @@ load("datasets\operators.mat")
 M = M.';
 load("datasets\Model.mat")
  
-ops.rho = 0.96;
-ops.niter = 20;
+ops.rho = 1;
+ops.niter = 15;
 n = 10;
 E = rand(198,4);
 I3=eye(10000);
@@ -20,5 +20,4 @@ end
 
 Zf = E*A;
 Zf = reshape(Zf.',100,100,198);
-imagesc(Zf(:,:,1));
 save("Zf_A.mat","Zf")

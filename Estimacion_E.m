@@ -1,9 +1,10 @@
 clc;
 clear;
 
-load("datasets\Model.mat");
+load("datasets\Model_norm.mat");
 Zh = reshape(Zh,625,198);
 Zh = Zh.';
-E = VCA(Zh, 'Endmembers', 4, 'verbose', 'off');
+E = hyperVCA(Zh,  4);
+E = max(0, E);
 save("Estimacion_E.mat","E")
 plot(E)

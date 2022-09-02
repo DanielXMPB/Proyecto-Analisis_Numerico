@@ -28,7 +28,8 @@ ops.rho = 0.99;
 % Max = max(Zf,[],'all');
 % Min = min(Zf,[],'all');
 
-rho = [1.5;1;0.5];
+% rho = [1.5;1;0.5];
+rho = [ 0.99 ];
 m = zeros(size(rho,1),5);
 endm = zeros(10000,1);
 m = [rho m];

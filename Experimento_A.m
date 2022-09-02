@@ -4,12 +4,13 @@ clear;
 load("datasets\gt.mat")
 load("datasets\operators.mat")
 M = M.';
-load("datasets\Model.mat")
- 
+load("datasets\Model_norm.mat")
+load("Estimacion_E.mat")
+
 ops.rho = 1;
 ops.niter = 15;
 n = 10;
-E = rand(198,4);
+% E = rand(198,4);
 I3=eye(10000);
 I4=eye(198);
 W2E=inv((M*M.')+ops.rho*I3);
@@ -19,5 +20,5 @@ for i=1:n
 end
 
 Zf = E*A;
-Zf = reshape(Zf.',100,100,198);
+Zf = reshape(Zf.', 100, 100, 198);
 save("Zf_A.mat","Zf")

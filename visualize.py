@@ -6,7 +6,7 @@ import scipy.io as sio
 from spec2rgb import ColourSystem
 import numpy as np
 
-data_path = 'Zf_E.mat'
+data_path = 'Zf.mat'
 var_name = 'Zf'
 img_spec = sio.loadmat(data_path)[var_name]
 

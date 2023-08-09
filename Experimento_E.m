@@ -18,6 +18,7 @@ for k=1:n
     A = abundances_step(A, E, Zh, Zm, B, M, R, ops, W1A);
 end
 Zf = E*A;
+A = reshape(A', [100 100 4]);
 Zf = reshape(Zf.',100,100,198);
 m = zeros(1,6);
 endm = zeros(10000,1);
@@ -33,4 +34,4 @@ end
 m(1,4) = mean(endm);
 m(1,5) = max(Zf(:));
 m(1,6) = min(Zf(:));
-save("Zf_E.mat","Zf")
+save("Zf_E.mat","Zf","A","E","m")

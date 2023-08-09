@@ -1,15 +1,15 @@
 clc;
 clear;
 load("datasets/operators.mat")
-load("datasets/Model_norm.mat")
+load("datasets/Model_40.mat")
 load("Estimacion_E.mat")
 % load("datasets/gt.mat")
 
 % Correcion M
 M = transpose(M);
-ops.niter=15;
-ops.n=10;
-ops.rho = 0.99;
+ops.niter=20;
+ops.n=20;
+ops.rho = 1;
 
 % [A] = abundances_step(A,E,Zh,Zm,B,M,R,ops);
 % A=reshape(A.',100,100,4);
@@ -23,19 +23,19 @@ ops.rho = 0.99;
 
 % [Zf, AZf, EZf] = spectral_fusion(E, Zh, Zm, B, M, R, ops);
 % Zf = reshape(Zf.',100,100,198);
+% AZf = reshape(AZf', [100 100 4]);
 % imagesc(Zf(:,:,1));
-% save('Zf.mat','Zf','AZf',"EZf"); 
+% save('Zf_imagen.mat','Zf','AZf',"EZf"); 
 % Max = max(Zf,[],'all');
 % Min = min(Zf,[],'all');
 
-% rho = [1.5;1;0.5];
-rho = [ 0.99 ];
+rho = 1;
 m = zeros(size(rho,1),5);
 endm = zeros(10000,1);
 m = [rho m];
 for i=1:size(rho,1)
     ops.rho = m(i,1);
-    Zf = spectral_fusion(E, Zh, Zm, B, M, R, ops);
+    [Zf, AZf, EZf] = spectral_fusion(E, Zh, Zm, B, M, R, ops);
     Zf = reshape(Zf.',100,100,198);
     m(i,2) = psnr(Zf,Z);
     m(i,3) = ssim(Zf,Z);
@@ -49,4 +49,6 @@ for i=1:size(rho,1)
     m(i,5) = max(Zf,[],'all');
     m(i,6) = min(Zf,[],'all');
 end
-% save("Metricas_1.1-0.02.mat","m")
+% AZf = reshape(AZf', [100 100 4]);
+% save('Zf_30.mat','Zf','AZf',"EZf"); 
+% save("Metricas_Zf_30.mat","m")

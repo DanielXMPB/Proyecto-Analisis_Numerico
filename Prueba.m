@@ -2,18 +2,17 @@ clc;
 clear;
 
 load("datasets/operators.mat")
-load("datasets/JasperRidge.mat")
+load("datasets/JasperRidge_norm.mat")
 
-Z_25 = SNR(Z,25);
-Z_35 = SNR(Z,35);
+Z_40 = SNR(Z,30);
 
 % Correcion de M
 M = transpose(M);
 
 % Guardar modelos
-Zb = Bd(Z,B);
+Zb = Bd(Z_40,B);
 Zh = Md(Zb,M);
 figure,imagesc(Zh(:,:,198));
-Zm = Rd(Z,R);
+Zm = Rd(Z_40,R);
 figure,imagesc(Zm(:,:,3));
-save('Model.mat','Zm','Zh','Z')
+save('Model_40.mat','Zm','Zh','Z')
